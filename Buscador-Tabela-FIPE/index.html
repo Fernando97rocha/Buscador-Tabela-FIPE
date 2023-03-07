@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Buscador FIPE</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <h1>Consulta Tabela FIPE</h1>
+  <div id="main-container">
+    <label for="marca">Marca</label>
+    <input id="marca" name="marca" list="marcas" value="Honda"/>
+    <datalist id="marcas">
+    </datalist>
+
+    <label for="modelo">Modelo</label>
+    <input id="modelo" list="modelos"/>
+    <datalist id="modelos">
+    </datalist>
+
+    <label for="ano">Ano</label>
+    <input id="ano" list="anos"/>
+    <datalist id="anos">
+    </datalist>
+
+    <button type="submit" id="button" >BUSCAR</button>
+  </div>
+
+
+
+  <script src="./formRequest.js"></script>
+  <script src="./APIRequest.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
