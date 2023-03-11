@@ -11,7 +11,7 @@ const inputAno = document.querySelector('#ano').value
 
 const formRequest = async () => {
   let marca = {}
-  let codigoModelosMarca = 25
+  let codigoModelosMarca = 0
   let anosModelo = 0
   const urlMarca = 'https://parallelum.com.br/fipe/api/v1/carros/marcas'
   const urlModelo = `https://parallelum.com.br/fipe/api/v1/carros/marcas/${codigoModelosMarca}/modelos`
@@ -43,40 +43,16 @@ const formRequest = async () => {
           console.log(marca)
           codigoModelosMarca = marca.codigo
           console.log(codigoModelosMarca)
+
         }
       })
 
     }catch (error) {
       alert(error)
     }
-
   }
   obtemMarca()
 
-
-  const obtemModelo = async (url) => {
-    console.log(codigoModelosMarca)
-    try{
-      const response = await fetch(urlModelo)
-      if (!response.ok) {
-        throw new Error('Erro Request Marca')
-      }
-      const modelos = await response.json()
-      const mostraMarcasNoInput = async() => {
-      modelos.forEach(async modelo => { 
-        listaModelos.innerHTML += `<option value="${modelo.nome}"/>`
-      })
-      }
-      mostraMarcasNoInput()
-      console.log(modelos)
-        
-    }catch (error) {
-      alert(error)
-    }
-    
-      
-  }
-  obtemModelo()
 
 }
 
