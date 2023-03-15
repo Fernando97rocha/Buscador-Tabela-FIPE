@@ -1,60 +1,97 @@
 //arquivo responsável por preecher os campos dos inputs
-const listaMarcas = document.querySelector('#marcas')
+let listaMarcas = document.querySelector('#marcas')
 const listaModelos = document.querySelector('#modelos')
-const listAno = document.querySelector('#ano')
+const listaAno = document.querySelector('#anos')
 
-const inputMarca = document.querySelector('#marca').value
-const inputModelo = document.querySelector('#modelo').value
-const inputAno = document.querySelector('#ano').value
+const inputBuscar = document.querySelector('#buscar')
+const inputModelo = document.querySelector('#modelo')
+const inputAno = document.querySelector('#ano')
 
 
+const urlMarca = 'https://parallelum.com.br/fipe/api/v1/carros/marcas'
 
-const formRequest = async () => {
-  let marca = {}
-  let codigoModelosMarca = 0
-  let anosModelo = 0
-  const urlMarca = 'https://parallelum.com.br/fipe/api/v1/carros/marcas'
-  const urlModelo = `https://parallelum.com.br/fipe/api/v1/carros/marcas/${codigoModelosMarca}/modelos`
-  const urlAno = `https://parallelum.com.br/fipe/api/v1/carros/marcas/${codigoModelosMarca}/modelos/${anosModelo}/anos`
-  const arrayCodigos = []
+const urlModelo = codigoModelosMarca => 
+  `https://parallelum.com.br/fipe/api/v1/carros/marcas/${codigoModelosMarca}/modelos`
+
+const urlAno = anosModelo => 
+  `https://parallelum.com.br/fipe/api/v1/carros/marcas/${urlModelo()}/modelos/${anosModelo}/anos`
   
-  const obtemMarca = async (url) => {
+const obtemMarca = async (url, callback) => {
     
-    try{
-      const response = await fetch(urlMarca)
-      if (!response.ok) {
-        throw new Error('Erro Request Marca')
-      }
-      const carros = await response.json()
-      const mostraMarcasNoInput = async() => {
-        carros.forEach(async carro => { 
-          listaMarcas.innerHTML += `<option value="${carro.nome}"/>`
-          arrayCodigos.push(carro.codigo)
-        })
-      }
-      mostraMarcasNoInput()
-      console.log(arrayCodigos)
-
-      
-      
-      carros.forEach(async carro => {
-        if(carro.nome === inputMarca){
-          marca = carro
-          console.log(marca)
-          codigoModelosMarca = marca.codigo
-          console.log(codigoModelosMarca)
-
-        }
-      })
-
-    }catch (error) {
-      alert(error)
+  try{
+    const response = await fetch(urlMarca)
+    if (!response.ok) {
+      throw new Error('Erro Request Marca')
     }
+    const carros = await response.json()
+    const mostraMarcasNoInput = async() => {
+      carros.forEach(async carro => { 
+        listaMarcas.innerHTML += `<option value="${carro.nome}">${carro.nome}</option>`
+      })
+    }
+    mostraMarcasNoInput()
+
+    if(listaMarcas.value) {
+      
+      inputBuscar.addEventListener('click', () => {
+
+        if (listaModelos.value || listaAno.value) {
+          listaModelos.innerHTML = ''
+          listaAno.innerHTML = ''
+          //if que reseta os campos caso o usuário queira trocar a marca do carro
+        }
+        
+        carros.filter(async carro => {
+          //filter para capturar somente o valor escolhido pelo usuário
+          if(listaMarcas.value === carro.nome) {
+            
+            const codigoModelosMarca = carro.codigo
+              
+            const obtemModelo = async () => {
+              
+              try { 
+                const response = await fetch(urlModelo(codigoModelosMarca))
+
+                if(!response.ok) {
+                  throw new Error('Não foi possível obter os dados')
+                }
+
+                const anoModelo = await response.json()
+                const mostraModelos = () => {
+                  //função que disponibiliza as opções dos modelos de cada marca
+                  anoModelo.modelos.forEach((modelo) => {
+                  listaModelos.innerHTML += `<option value="${modelo.nome}">${modelo.nome}</option>`
+                  })
+                }
+                mostraModelos()
+  
+                const mostraAnos = () => {
+                  //função que disponibiliza as opções dos modelos de cada marca
+                  anoModelo.anos.forEach(ano => {
+                    listaAno.innerHTML += `<option value="${ano.nome}">${ano.nome}</option>`
+                  })
+                }
+  
+                mostraAnos()
+  
+              } catch (error) {
+                alert(error)
+              }
+  
+            }
+            obtemModelo()
+              
+          }
+        })
+    })
+        
   }
-  obtemMarca()
 
-
+  }catch (error) {
+    alert(error)
+  }
+    
 }
+obtemMarca()
 
-
-formRequest()
+//vou criar uma função que faz um novo request de acordo com o valor do input
