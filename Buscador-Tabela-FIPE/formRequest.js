@@ -1,25 +1,27 @@
 //arquivo responsável por preecher os campos dos inputs
-let listaMarcas = document.querySelector('#marcas')
+const listaMarcas = document.querySelector('#marcas')
 const listaModelos = document.querySelector('#modelos')
-const listaAno = document.querySelector('#anos')
+const listaAnos = document.querySelector('#anos')
 
 const inputBuscar = document.querySelector('#buscar')
 const inputModelo = document.querySelector('#modelo')
 const inputAno = document.querySelector('#ano')
 
 
-const urlMarca = 'https://parallelum.com.br/fipe/api/v1/carros/marcas'
+const urlMarca = url =>  url = 'https://parallelum.com.br/fipe/api/v1/carros/marcas'
 
-const urlModelo = codigoModelosMarca => 
-  `https://parallelum.com.br/fipe/api/v1/carros/marcas/${codigoModelosMarca}/modelos`
+const urlModelo = codigoMarca => 
+  `https://parallelum.com.br/fipe/api/v1/carros/marcas/${codigoMarca}/modelos`
 
-const urlAno = anosModelo => 
-  `https://parallelum.com.br/fipe/api/v1/carros/marcas/${urlModelo()}/modelos/${anosModelo}/anos`
+const urlAno = codigoModelo => 
+  `https://parallelum.com.br/fipe/api/v1/carros/marcas/${urlModelo()}/modelos/${codigoModelo}/anos`
   
-const obtemMarca = async (url, callback) => {
+const urlValorVeiculo = codigoAno => `https://parallelum.com.br/fipe/api/v1/carros/marcas/${urlModelo()}/modelos/${urlAno()}/anos/${codigoAno}`
+
+const obtemMarca = async (url) => {
     
   try{
-    const response = await fetch(urlMarca)
+    const response = await fetch(urlMarca(url))
     if (!response.ok) {
       throw new Error('Erro Request Marca')
     }
@@ -35,9 +37,9 @@ const obtemMarca = async (url, callback) => {
       
       inputBuscar.addEventListener('click', () => {
 
-        if (listaModelos.value || listaAno.value) {
+        if (listaModelos.value || listaAnos.value) {
           listaModelos.innerHTML = ''
-          listaAno.innerHTML = ''
+          listaAnos.innerHTML = ''
           //if que reseta os campos caso o usuário queira trocar a marca do carro
         }
         
@@ -45,12 +47,12 @@ const obtemMarca = async (url, callback) => {
           //filter para capturar somente o valor escolhido pelo usuário
           if(listaMarcas.value === carro.nome) {
             
-            const codigoModelosMarca = carro.codigo
+            const codigoMarca = carro.codigo
               
             const obtemModelo = async () => {
               
               try { 
-                const response = await fetch(urlModelo(codigoModelosMarca))
+                const response = await fetch(urlModelo(codigoMarca))
 
                 if(!response.ok) {
                   throw new Error('Não foi possível obter os dados')
@@ -61,6 +63,11 @@ const obtemMarca = async (url, callback) => {
                   //função que disponibiliza as opções dos modelos de cada marca
                   anoModelo.modelos.forEach((modelo) => {
                   listaModelos.innerHTML += `<option value="${modelo.nome}">${modelo.nome}</option>`
+                  
+                  if(listaModelos.value === modelo.nome) {
+                    console.log(modelo.codigo)
+                  }
+
                   })
                 }
                 mostraModelos()
@@ -68,7 +75,7 @@ const obtemMarca = async (url, callback) => {
                 const mostraAnos = () => {
                   //função que disponibiliza as opções dos modelos de cada marca
                   anoModelo.anos.forEach(ano => {
-                    listaAno.innerHTML += `<option value="${ano.nome}">${ano.nome}</option>`
+                    listaAnos.innerHTML += `<option value="${ano.nome}">${ano.nome}</option>`
                   })
                 }
   
@@ -93,5 +100,7 @@ const obtemMarca = async (url, callback) => {
     
 }
 obtemMarca()
+
+
 
 //vou criar uma função que faz um novo request de acordo com o valor do input
