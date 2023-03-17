@@ -13,8 +13,8 @@ const urlMarca = url =>  url = 'https://parallelum.com.br/fipe/api/v1/carros/mar
 const urlModelo = codigoMarca => 
   `https://parallelum.com.br/fipe/api/v1/carros/marcas/${codigoMarca}/modelos`
 
-const urlAno = codigoModelo => 
-  `https://parallelum.com.br/fipe/api/v1/carros/marcas/${urlModelo()}/modelos/${codigoModelo}/anos`
+const urlModeloAno = (codigoMarca, codigoModelo) => 
+  `https://parallelum.com.br/fipe/api/v1/carros/marcas/${codigoMarca}/modelos/${codigoModelo}/anos`
   
 const urlValorVeiculo = codigoAno => `https://parallelum.com.br/fipe/api/v1/carros/marcas/${urlModelo()}/modelos/${urlAno()}/anos/${codigoAno}`
 
@@ -22,6 +22,7 @@ const obtemMarca = async (url) => {
     
   try{
     const response = await fetch(urlMarca(url))
+    console.log(urlMarca(url))
     if (!response.ok) {
       throw new Error('Erro Request Marca')
     }
@@ -37,7 +38,7 @@ const obtemMarca = async (url) => {
       
       inputBuscar.addEventListener('click', () => {
 
-        if (listaModelos.value || listaAnos.value) {
+        if (listaModelos.value && listaAnos.value) {
           listaModelos.innerHTML = ''
           listaAnos.innerHTML = ''
           //if que reseta os campos caso o usuário queira trocar a marca do carro
