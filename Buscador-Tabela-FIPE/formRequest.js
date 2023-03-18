@@ -2,11 +2,8 @@
 const listaMarcas = document.querySelector('#marcas')
 const listaModelos = document.querySelector('#modelos')
 const listaAnos = document.querySelector('#anos')
-
-const inputBuscar = document.querySelector('#buscar')
-const inputModelo = document.querySelector('#modelo')
-const inputAno = document.querySelector('#ano')
-
+const btnBuscar = document.querySelector('#buscar')
+const btnConsultar = document.querySelector('#consultar')
 
 const urlMarca = url =>  url = 'https://parallelum.com.br/fipe/api/v1/carros/marcas'
 
@@ -36,7 +33,10 @@ const obtemMarca = async (url) => {
 
     if(listaMarcas.value) {
       
-      inputBuscar.addEventListener('click', () => {
+      btnBuscar.addEventListener('click', () => {
+
+        listaModelos.setAttribute('class', 'mostra-modelos')
+        listaAnos.setAttribute('class', 'mostra-modelos')
 
         if (listaModelos.value && listaAnos.value) {
           listaModelos.innerHTML = ''
@@ -62,19 +62,16 @@ const obtemMarca = async (url) => {
                 const anoModelo = await response.json()
                 const mostraModelos = () => {
                   //função que disponibiliza as opções dos modelos de cada marca
+                  listaModelos.innerHTML += `<option value="default-modelo">- Selecione um modelo -</option>`
                   anoModelo.modelos.forEach((modelo) => {
-                  listaModelos.innerHTML += `<option value="${modelo.nome}">${modelo.nome}</option>`
-                  
-                  if(listaModelos.value === modelo.nome) {
-                    console.log(modelo.codigo)
-                  }
-
+                    listaModelos.innerHTML += `<option value="${modelo.nome}">${modelo.nome}</option>`
                   })
                 }
                 mostraModelos()
   
                 const mostraAnos = () => {
                   //função que disponibiliza as opções dos modelos de cada marca
+                  listaAnos.innerHTML += `<option value="default-ano">- Selecione um ano -</option>`
                   anoModelo.anos.forEach(ano => {
                     listaAnos.innerHTML += `<option value="${ano.nome}">${ano.nome}</option>`
                   })

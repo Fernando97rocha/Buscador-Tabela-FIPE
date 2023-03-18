@@ -80,3 +80,7 @@ span{
   width:fit-content;
   font-size: 35px;
 }
+
+.ocultado{
+  display: none;
+}
