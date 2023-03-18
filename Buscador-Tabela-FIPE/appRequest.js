@@ -1,4 +1,9 @@
 const btnConsultar = document.querySelector('#consultar')
+const divResultado = document.querySelector('#resultadoBusca')
+
+const mostraResultadoValores = () => {
+
+}
 
 btnConsultar.addEventListener('click', (marca, valorModelo, valorAnos) => {
   
@@ -59,7 +64,13 @@ btnConsultar.addEventListener('click', (marca, valorModelo, valorAnos) => {
                                 throw new Error('Não foi possível obter os valores')
                               }
 
-                              console.log(await response.json())
+                              const objValores = await response.json()
+                              console.log(objValores)
+                              divResultado.innerHTML += `<span class="span-valor">${objValores.Valor}</span>`
+                              divResultado.innerHTML += `<span class="span-marca">${objValores.Marca}</span>`
+                              divResultado.innerHTML += `<span class="span-modelo">${objValores.Modelo}</span>`
+                              divResultado.innerHTML += `<span class="span-ano-modelo">${objValores.AnoModelo}</span>`
+
                             } catch (error) {
                               alert(error)
                             }
