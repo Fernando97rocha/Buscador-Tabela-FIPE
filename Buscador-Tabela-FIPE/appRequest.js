@@ -1,11 +1,18 @@
 const btnConsultar = document.querySelector('#consultar')
 const divResultado = document.querySelector('#resultadoBusca')
 
-const mostraResultadoValores = () => {
+const spanValor = document.querySelector('.span-valor')
+const spanMarca = document.querySelector('.span-marca')
+const spanModelo = document.querySelector('.span-modelo')
+const spanAnoModelo = document.querySelector('.span-ano-modelo')
 
-}
 
 btnConsultar.addEventListener('click', (marca, valorModelo, valorAnos) => {
+  const urlModeloAno = (codigoMarca) => 
+    `https://parallelum.com.br/fipe/api/v1/carros/marcas/${codigoMarca}/modelos`
+  
+  const urlValores = (codigoMarca, codigoModelo, codigoAno) => 
+    `https://parallelum.com.br/fipe/api/v1/carros/marcas/${codigoMarca}/modelos/${codigoModelo}/anos/${codigoAno}`
   
   const FuncMarca = async (url) => {
       try { 
@@ -26,18 +33,16 @@ btnConsultar.addEventListener('click', (marca, valorModelo, valorAnos) => {
             funcModelos = async () => {
               console.log(await carro)
               const codigoMarca = carro.codigo
-              const urlModeloAno = (codigoMarca) => 
-                `https://parallelum.com.br/fipe/api/v1/carros/marcas/${codigoMarca}/modelos`
               
               try {
                 console.log(codigoMarca)
                 const response = await fetch(urlModeloAno(codigoMarca))
-
                 if (!response.ok) {
                   throw new Error('Não foi possível obter os dados da API')
                 }
-              
+                
                 const anosModelos = await response.json()
+                console.log(anosModelos)
                 
                 anosModelos.modelos.filter((modelo) => {
                   if (valorModelo === modelo.nome) {
@@ -50,26 +55,29 @@ btnConsultar.addEventListener('click', (marca, valorModelo, valorAnos) => {
                           console.log(ano.nome)
                           const codigoAno = ano.codigo
 
-                          const urlValores = (codigoMarca, codigoModelo, codigoAno) => 
-                            `https://parallelum.com.br/fipe/api/v1/carros/marcas/${codigoMarca}/modelos/${codigoModelo}/anos/${codigoAno}`
-
                           const obtemValores = async () => {
                             console.log(codigoMarca, codigoModelo, codigoAno)
                             
                             try {
-                              const response = await fetch(urlValores(codigoMarca, codigoModelo, codigoAno))
-                              console.log(urlValores(codigoMarca, codigoModelo, codigoAno))
-                            
+                              const response = await fetch(urlValores(codigoMarca, 
+                                codigoModelo, 
+                                codigoAno))
+                              
                               if (!response.ok) {
                                 throw new Error('Não foi possível obter os valores')
                               }
 
                               const objValores = await response.json()
                               console.log(objValores)
-                              divResultado.innerHTML += `<span class="span-valor">${objValores.Valor}</span>`
-                              divResultado.innerHTML += `<span class="span-marca">${objValores.Marca}</span>`
-                              divResultado.innerHTML += `<span class="span-modelo">${objValores.Modelo}</span>`
-                              divResultado.innerHTML += `<span class="span-ano-modelo">${objValores.AnoModelo}</span>`
+                              
+                              spanMarca.innerText = `${objValores.Marca}`
+                              spanModelo.innerText = `Modelo: ${objValores.Modelo}`
+                              if (objValores.AnoModelo === 32000) {
+                                spanAnoModelo.innerText = `0 km`
+                              } else {
+                                spanAnoModelo.innerText = `Ano: ${objValores.AnoModelo}`
+                              }
+                              spanValor.innerText = `${objValores.Valor}`
 
                             } catch (error) {
                               alert(error)

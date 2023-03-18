@@ -3,6 +3,9 @@ body{
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: rgb(161, 199, 199);
+  color: white;
 }
 
 #main-container {
@@ -10,13 +13,70 @@ body{
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  width: 30%;
+  width: 35%;
   padding: 1%;
   background-color: rgb(102, 99, 119);
   color: white;
+  border-radius: 5px;
+
 }
 
 
 select{
-  width: 200px;
+  width: 80%;
+  height: 30px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  text-align: center;
+  font-size: 15px;
+}
+
+#resultadoBusca{
+  display: flex;
+  flex-direction: column;
+  align-content: center;  
+  background-color: rgb(41, 46, 44);
+  margin-top: 20px;
+  width: 95%;
+  height: 50%;
+  border-radius: 5px;
+
+}
+
+ul{
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  align-items: center;
+  justify-items: center;
+
+
+  justify-items: center;
+}
+
+li{
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+  align-items: center;
+  justify-content: start;
+  justify-items: center;
+  margin-bottom: 5px;
+  margin-left: 0;
+  width: 90%;
+}
+
+span{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  color: white;
+}
+
+.span-modelo{
+  font-size: 15px;
+}
+
+.span-valor{
+  width:fit-content;
+  font-size: 35px;
 }
