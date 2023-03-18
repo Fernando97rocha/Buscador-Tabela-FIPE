@@ -1,4 +1,3 @@
-const divResultado = document.querySelector('#resultadoBusca')
 const spanValor = document.querySelector('.span-valor')
 const spanMarca = document.querySelector('.span-marca')
 const spanModelo = document.querySelector('.span-modelo')

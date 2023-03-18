@@ -6,8 +6,8 @@
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <h1>Consulta Tabela FIPE</h1>
   <div id="main-container">
+    <h1>Consulta Tabela FIPE</h1>
     <label for="marca">Marca</label>
     <select id="marcas" name="marcas">-</select>
     <button id="buscar" name="buscar">Buscar</button>
@@ -20,7 +20,7 @@
     <select id="anos" class="ocultado" name="anos"></select>
 
     <button id="consultar" >CONSULTAR</button>
-    <div id="resultadoBusca">
+    <div id="resultadoBusca" class="resultado-none">
       <ul>
         <li><span class="span-marca"></span></li>
         <li><span class="span-modelo"></span></li>
@@ -33,6 +33,5 @@
 
   <script src="./formRequest.js"></script>
   <script src="./appRequest.js"></script>
-  <script src="./app.js"></script>
 </body>
 </html>

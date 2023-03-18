@@ -4,7 +4,7 @@ body{
   align-items: center;
   justify-content: center;
   font-family: Arial, Helvetica, sans-serif;
-  background-color: rgb(161, 199, 199);
+  background-image: linear-gradient(to up, red, yellow);
   color: white;
 }
 
@@ -15,10 +15,10 @@ body{
   justify-content: space-around;
   width: 35%;
   padding: 1%;
-  background-color: rgb(102, 99, 119);
+  background-color: rgba(31, 75, 114, 0.514);
   color: white;
   border-radius: 5px;
-
+  border: solid rgba(255, 255, 255, 0.664) 1px;
 }
 
 
@@ -29,13 +29,14 @@ select{
   margin-bottom: 5px;
   text-align: center;
   font-size: 15px;
+  background-color: rgba(255, 255, 255, 0.795);
 }
 
 #resultadoBusca{
   display: flex;
   flex-direction: column;
   align-content: center;  
-  background-color: rgb(41, 46, 44);
+  background-color: rgba(15, 37, 56, 0.507);
   margin-top: 20px;
   width: 95%;
   height: 50%;
@@ -83,4 +84,9 @@ span{
 
 .ocultado{
   display: none;
+}
+
+.resultado-none{
+  display: none;
+  background-color: black;
 }

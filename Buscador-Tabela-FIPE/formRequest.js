@@ -4,6 +4,8 @@ const listaModelos = document.querySelector('#modelos')
 const listaAnos = document.querySelector('#anos')
 const btnBuscar = document.querySelector('#buscar')
 const btnConsultar = document.querySelector('#consultar')
+const divResultado = document.querySelector('#resultadoBusca')
+
 
 const urlMarca = url =>  url = 'https://parallelum.com.br/fipe/api/v1/carros/marcas'
 
@@ -16,7 +18,8 @@ const urlModeloAno = (codigoMarca, codigoModelo) =>
 const urlValorVeiculo = codigoAno => `https://parallelum.com.br/fipe/api/v1/carros/marcas/${urlModelo()}/modelos/${urlAno()}/anos/${codigoAno}`
 
 const obtemMarca = async (url) => {
-    
+  
+  const stringInicialMarcas = '- Selecione uma marca -'
   try{
     const response = await fetch(urlMarca(url))
     console.log(urlMarca(url))
@@ -25,6 +28,8 @@ const obtemMarca = async (url) => {
     }
     const carros = await response.json()
     const mostraMarcasNoInput = async() => {
+      
+      listaMarcas.innerHTML += `<option value="default-marca">${stringInicialMarcas}</option>`
       carros.forEach(async carro => { 
         listaMarcas.innerHTML += `<option value="${carro.nome}">${carro.nome}</option>`
       })
@@ -32,8 +37,8 @@ const obtemMarca = async (url) => {
     mostraMarcasNoInput()
 
     if(listaMarcas.value) {
-      
       btnBuscar.addEventListener('click', () => {
+        console.log(listaMarcas.value)
 
         listaModelos.setAttribute('class', 'mostra-modelos')
         listaAnos.setAttribute('class', 'mostra-modelos')
