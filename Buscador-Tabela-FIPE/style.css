@@ -4,8 +4,9 @@ body{
   align-items: center;
   justify-content: center;
   font-family: Arial, Helvetica, sans-serif;
-  background-image: linear-gradient(to up, red, yellow);
+  background-color: rgb(46, 75, 100);
   color: white;
+  text-shadow: rgba(0, 0, 0, 0.603) 1px 1px;
 }
 
 #main-container {
@@ -13,12 +14,13 @@ body{
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  width: 35%;
+  width: 45%;
   padding: 1%;
-  background-color: rgba(31, 75, 114, 0.514);
+  background-color: rgba(255, 255, 255, 0.589);
   color: white;
   border-radius: 5px;
   border: solid rgba(255, 255, 255, 0.664) 1px;
+  margin: 40px;
 }
 
 
@@ -29,13 +31,15 @@ select{
   margin-bottom: 5px;
   text-align: center;
   font-size: 15px;
+  color: rgb(128, 122, 122);
   background-color: rgba(255, 255, 255, 0.795);
 }
 
 #resultadoBusca{
   display: flex;
   flex-direction: column;
-  align-content: center;  
+  align-content: center;
+  
   background-color: rgba(15, 37, 56, 0.507);
   margin-top: 20px;
   width: 95%;
@@ -50,18 +54,14 @@ ul{
   padding: 0;
   align-items: center;
   justify-items: center;
-
-
-  justify-items: center;
 }
 
 li{
   display: flex;
   list-style: none;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  justify-content: start;
-  justify-items: center;
+  text-align: center;
   margin-bottom: 5px;
   margin-left: 0;
   width: 90%;
@@ -71,6 +71,7 @@ span{
   font-family: Arial, Helvetica, sans-serif;
   font-size: 20px;
   color: white;
+  text-align: center;
 }
 
 .span-modelo{
@@ -89,4 +90,27 @@ span{
 .resultado-none{
   display: none;
   background-color: black;
+}
+
+#buscar{
+  margin-bottom: 10px;
+}
+
+#buscar, #consultar{
+  background-color: burlywood;
+  padding: 5px;
+  border: solid white 1px;
+  border-radius: 5px;
+}
+
+#span-erro-servidor{
+  background-color: rgba(255, 0, 0, 0.459);
+  display: flex;
+  text-align: center;
+  border: solid rgba(255, 0, 0, 0.514) 2px;
+  border-radius: 5px;
+  width: 70%;
+  margin: 5%;
+  font-size: 70%;
+
 }
