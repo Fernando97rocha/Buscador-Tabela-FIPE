@@ -1,14 +1,14 @@
-const spanValor = document.querySelector('.span-valor')
-const spanMarca = document.querySelector('.span-marca')
-const spanModelo = document.querySelector('.span-modelo')
-const spanAnoModelo = document.querySelector('.span-ano-modelo')
-
-
 btnConsultar.addEventListener('click', (event, marca, valorModelo, valorAnos) => {
 
   if (listaModelos.value !== 'default-modelo' && listaAnos.value !== 'default-ano') {
     divResultado.setAttribute('class', 'mostra')
     ul.setAttribute('class', 'mostra')
+    if (event.target === btnConsultar) {
+      spanMarca.innerText = ''
+      spanModelo.innerText = ''
+      spanAnoModelo.innerText = ''
+      spanValor.innerText = 'Buscando...'
+    }
   }
 
   const urlModeloAno = (codigoMarca) =>
@@ -73,10 +73,6 @@ btnConsultar.addEventListener('click', (event, marca, valorModelo, valorAnos) =>
                             }
                             spanValor.innerText = `${objValores.Valor}`
 
-                            if (event.target === btnConsultar) {
-                              divResultado.setAttribute('class', 'mostra')
-                              ul.setAttribute('class', 'mostra')
-                            }
                           } catch (error) {
                             alert(error)
                           }

@@ -6,7 +6,10 @@ const btnBuscar = document.querySelector('#buscar')
 const btnConsultar = document.querySelector('#consultar')
 const divResultado = document.querySelector('#resultadoBusca')
 const ul = document.querySelector('ul')
-
+const spanValor = document.querySelector('.span-valor')
+const spanMarca = document.querySelector('.span-marca')
+const spanModelo = document.querySelector('.span-modelo')
+const spanAnoModelo = document.querySelector('.span-ano-modelo')
 
 const urlMarca = url => url = 'https://parallelum.com.br/fipe/api/v1/carros/marcas'
 
@@ -43,18 +46,20 @@ const obtemMarca = async (url) => {
           btnConsultar.setAttribute('class', 'mostra')
         }
 
-        if (event.target === btnBuscar) {
-
-          divResultado.setAttribute('class', 'ocultado')
-          ul.setAttribute('class', 'ocultado')
-
-          console.log(event.target)
-        }
-
         if (listaModelos.value && listaAnos.value) {
           listaModelos.innerHTML = ''
           listaAnos.innerHTML = ''
           //if que reseta os campos caso o usuário queira trocar a marca do carro
+        }
+
+        if (event.target === btnBuscar) {
+
+          divResultado.setAttribute('class', 'ocultado')
+          ul.setAttribute('class', 'ocultado')
+          spanMarca.innerText = ''
+          spanModelo.innerText = ''
+          spanAnoModelo.innerText = ''
+          spanValor.innerText = 'Buscando...'
         }
 
         carros.filter(async carro => {
