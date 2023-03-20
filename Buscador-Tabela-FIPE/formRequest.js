@@ -16,8 +16,6 @@ const urlModelo = codigoMarca =>
 const urlModeloAno = (codigoMarca, codigoModelo) =>
   `https://parallelum.com.br/fipe/api/v1/carros/marcas/${codigoMarca}/modelos/${codigoModelo}/anos`
 
-const urlValorVeiculo = codigoAno => `https://parallelum.com.br/fipe/api/v1/carros/marcas/${urlModelo()}/modelos/${urlAno()}/anos/${codigoAno}`
-
 const obtemMarca = async (url) => {
 
   const stringInicialMarcas = '- Selecione uma marca -'
@@ -35,7 +33,7 @@ const obtemMarca = async (url) => {
       })
     }
     mostraMarcasNoInput()
- 
+
     if (listaMarcas.value) {
       btnBuscar.addEventListener('click', event => {
         if (listaMarcas.value === 'default-marca') {
@@ -44,12 +42,12 @@ const obtemMarca = async (url) => {
           listaAnos.setAttribute('class', 'mostra')
           btnConsultar.setAttribute('class', 'mostra')
         }
-        
+
         if (event.target === btnBuscar) {
-          
+
           divResultado.setAttribute('class', 'ocultado')
           ul.setAttribute('class', 'ocultado')
-          
+
           console.log(event.target)
         }
 

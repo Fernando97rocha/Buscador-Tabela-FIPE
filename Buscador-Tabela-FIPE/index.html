@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <title>Buscador FIPE</title>
   <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
   <div id="main-container">
     <h1>Consulta Tabela FIPE</h1>
     <!-- <label for="marca">Marca</label> -->
     <select id="marcas" name="marcas">-</select>
     <button id="buscar" name="buscar">Buscar</button>
-    
+
 
     <!-- <label id="modelo" class="ocultado" for="modelo">Modelo</label> -->
     <select id="modelos" class="ocultado" name="modelos"></select>
@@ -20,7 +22,7 @@
     <select id="anos" class="ocultado" name="anos"></select>
 
     <button id="consultar" class="ocultado">CONSULTAR</button>
-    
+
     <div id="resultadoBusca" class="ocultado">
       <ul class="ocultado">
         <li><span class="span-marca"></span></li>
@@ -34,4 +36,5 @@
   <script src="./formRequest.js"></script>
   <script src="./appRequest.js"></script>
 </body>
+
 </html>

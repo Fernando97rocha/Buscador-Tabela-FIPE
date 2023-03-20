@@ -10,7 +10,7 @@ btnConsultar.addEventListener('click', (event, marca, valorModelo, valorAnos) =>
     divResultado.setAttribute('class', 'mostra')
     ul.setAttribute('class', 'mostra')
   }
-  
+
   const urlModeloAno = (codigoMarca) =>
     `https://parallelum.com.br/fipe/api/v1/carros/marcas/${codigoMarca}/modelos`
 
