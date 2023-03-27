@@ -16,9 +16,6 @@ const urlMarca = url => url = 'https://parallelum.com.br/fipe/api/v1/carros/marc
 const urlModelo = codigoMarca =>
   `https://parallelum.com.br/fipe/api/v1/carros/marcas/${codigoMarca}/modelos`
 
-const urlModeloAno = (codigoMarca, codigoModelo) =>
-  `https://parallelum.com.br/fipe/api/v1/carros/marcas/${codigoMarca}/modelos/${codigoModelo}/anos`
-
 const obtemMarca = async (url) => {
 
   const stringInicialMarcas = '- Selecione uma marca -'
