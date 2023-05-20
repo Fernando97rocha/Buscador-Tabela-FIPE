@@ -29,69 +29,10 @@ btnConsultar.addEventListener('click', (event, marca, valorModelo, valorAnos) =>
       }
 
       const carros = await response.json()
-      carros.filter(carro => {
-        if (marca === carro.nome) {
-          funcModelos = async () => {
-            const codigoMarca = carro.codigo
+      carros.filter(car => {
+        if (marca === car.nome) {
 
-            try {
-              const response = await fetch(urlModeloAno(codigoMarca))
-              if (!response.ok) {
-                throw new Error('Não foi possível obter os dados da API')
-              }
-
-              const anosModelos = await response.json()
-
-              anosModelos.modelos.filter((modelo) => {
-                if (valorModelo === modelo.nome) {
-                  const codigoModelo = modelo.codigo
-
-                  const funcAnos = () => {
-                    anosModelos.anos.filter(ano => {
-                      if (valorAnos === ano.nome) {
-                        const codigoAno = ano.codigo
-
-                        const obtemValores = async () => {
-
-                          try {
-                            const response = await fetch(urlValores(codigoMarca,
-                              codigoModelo,
-                              codigoAno))
-
-                            if (!response.ok) {
-                              throw new Error('Não foi possível obter os valores')
-                            }
-
-                            const objValores = await response.json()
-
-                            spanMarca.innerText = `${objValores.Marca}`
-                            spanModelo.innerText = `Modelo: ${objValores.Modelo}`
-                            if (objValores.AnoModelo === 32000) {
-                              spanAnoModelo.innerText = `0 km`
-                            } else {
-                              spanAnoModelo.innerText = `Ano: ${objValores.AnoModelo}`
-                            }
-                            spanValor.innerText = `${objValores.Valor}`
-
-                          } catch (error) {
-                            alert(error)
-                          }
-                        }
-                        obtemValores()
-
-                      }
-                    })
-                  }
-                  funcAnos()
-
-                }
-              })
-
-            } catch (error) {
-              alert(error)
-            }
-          }
-          funcModelos()
+          funcModelos(car)
 
         }
       })
@@ -104,4 +45,67 @@ btnConsultar.addEventListener('click', (event, marca, valorModelo, valorAnos) =>
   FuncMarca()
 
 
+  funcModelos = async (carsObj) => {
+    const codigoMarca = carsObj.codigo
+
+    try {
+      const response = await fetch(urlModeloAno(codigoMarca))
+      if (!response.ok) {
+        throw new Error('Não foi possível obter os dados da API')
+      }
+
+      const anosModelos = await response.json()
+
+      anosModelos.modelos.filter((modelo) => {
+        if (valorModelo === modelo.nome) {
+          const codigoModelo = modelo.codigo
+
+          const funcAnos = () => {
+            anosModelos.anos.filter(ano => {
+              if (valorAnos === ano.nome) {
+                const codigoAno = ano.codigo
+
+                const obtemValores = async () => {
+
+                  try {
+                    const response = await fetch(urlValores(codigoMarca,
+                      codigoModelo,
+                      codigoAno))
+
+                    if (!response.ok) {
+                      throw new Error('Não foi possível obter os valores')
+                    }
+
+                    const objValores = await response.json()
+
+                    spanMarca.innerText = `${objValores.Marca}`
+                    spanModelo.innerText = `Modelo: ${objValores.Modelo}`
+                    if (objValores.AnoModelo === 32000) {
+                      spanAnoModelo.innerText = `0 km`
+                    } else {
+                      spanAnoModelo.innerText = `Ano: ${objValores.AnoModelo}`
+                    }
+                    spanValor.innerText = `${objValores.Valor}`
+
+                  } catch (error) {
+                    alert(error)
+                  }
+                }
+                obtemValores()
+
+              }
+            })
+          }
+          funcAnos(modelo)
+
+        }
+      })
+
+    } catch (error) {
+      alert(error)
+    }
+  }
+
+
 })
+
