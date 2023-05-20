@@ -1,3 +1,4 @@
+
 btnConsultar.addEventListener('click', (event, marca, valorModelo, valorAnos) => {
 
   if (listaModelos.value !== 'default-modelo' && listaAnos.value !== 'default-ano') {
@@ -11,13 +12,13 @@ btnConsultar.addEventListener('click', (event, marca, valorModelo, valorAnos) =>
     }
   }
 
-  const urlModeloAno = (codigoMarca) =>
-    `https://parallelum.com.br/fipe/api/v1/carros/marcas/${codigoMarca}/modelos`
+  const yearModelUrl = (brandCode) =>
+    `https://parallelum.com.br/fipe/api/v1/carros/marcas/${brandCode}/modelos`
 
-  const urlValores = (codigoMarca, codigoModelo, codigoAno) =>
-    `https://parallelum.com.br/fipe/api/v1/carros/marcas/${codigoMarca}/modelos/${codigoModelo}/anos/${codigoAno}`
+  const pricesUrl = (brandCode, modelCode, yearCode) =>
+    `https://parallelum.com.br/fipe/api/v1/carros/marcas/${brandCode}/modelos/${modelCode}/anos/${yearCode}`
 
-  const FuncMarca = async (url) => {
+  const getBrand = async (url) => {
     marca = listaMarcas.value
     valorModelo = listaModelos.value
     valorAnos = listaAnos.value
@@ -32,7 +33,7 @@ btnConsultar.addEventListener('click', (event, marca, valorModelo, valorAnos) =>
       carros.filter(car => {
         if (marca === car.nome) {
 
-          funcModelos(car)
+          getCarModels(car)
 
         }
       })
@@ -41,71 +42,71 @@ btnConsultar.addEventListener('click', (event, marca, valorModelo, valorAnos) =>
       alert(error)
     }
   }
+  getBrand()
 
-  FuncMarca()
 
-
-  funcModelos = async (carsObj) => {
-    const codigoMarca = carsObj.codigo
-
+  getCarModels = async (carsObj) => {
+    const brandCode = carsObj.codigo
     try {
-      const response = await fetch(urlModeloAno(codigoMarca))
+      const response = await fetch(yearModelUrl(brandCode))
       if (!response.ok) {
         throw new Error('Não foi possível obter os dados da API')
       }
 
-      const anosModelos = await response.json()
+      const yearModels = await response.json()
 
-      anosModelos.modelos.filter((modelo) => {
-        if (valorModelo === modelo.nome) {
-          const codigoModelo = modelo.codigo
+      yearModels.modelos.filter((model) => {
+        if (valorModelo === model.nome) {
+          const modelCode = model.codigo
 
-          const funcAnos = () => {
-            anosModelos.anos.filter(ano => {
-              if (valorAnos === ano.nome) {
-                const codigoAno = ano.codigo
-
-                const obtemValores = async () => {
-
-                  try {
-                    const response = await fetch(urlValores(codigoMarca,
-                      codigoModelo,
-                      codigoAno))
-
-                    if (!response.ok) {
-                      throw new Error('Não foi possível obter os valores')
-                    }
-
-                    const objValores = await response.json()
-
-                    spanMarca.innerText = `${objValores.Marca}`
-                    spanModelo.innerText = `Modelo: ${objValores.Modelo}`
-                    if (objValores.AnoModelo === 32000) {
-                      spanAnoModelo.innerText = `0 km`
-                    } else {
-                      spanAnoModelo.innerText = `Ano: ${objValores.AnoModelo}`
-                    }
-                    spanValor.innerText = `${objValores.Valor}`
-
-                  } catch (error) {
-                    alert(error)
-                  }
-                }
-                obtemValores()
-
-              }
-            })
-          }
-          funcAnos(modelo)
+          getYear(yearModels, brandCode, modelCode)
 
         }
       })
 
     } catch (error) {
       alert(error)
+      console.log(error)
     }
   }
 
+  const getYear = (yearModels, brandCode, modelCode) => {
+    yearModels.anos.filter(ano => {
+      if (valorAnos === ano.nome) {
+        const yearCode = ano.codigo
+
+        getPrices(brandCode, modelCode, yearCode)
+
+      }
+    })
+  }
+
+
+  const getPrices = async (brandCode, modelCode, yearCode) => {
+    try {
+      const response = await fetch(pricesUrl(brandCode,
+        modelCode,
+        yearCode))
+
+      if (!response.ok) {
+        throw new Error('Não foi possível obter os valores')
+      }
+
+      const pricesObj = await response.json()
+
+      spanMarca.innerText = `${pricesObj.Marca}`
+      spanModelo.innerText = `Modelo: ${pricesObj.Modelo}`
+      if (pricesObj.AnoModelo === 32000) {
+        spanAnoModelo.innerText = `0 km`
+      } else {
+        spanAnoModelo.innerText = `Ano: ${pricesObj.AnoModelo}`
+      }
+      spanValor.innerText = `${pricesObj.Valor}`
+
+    } catch (error) {
+      alert(error)
+    }
+  }
 
 })
 
